@@ -1,4 +1,4 @@
-const sauce = require('../models/sauce');
+const Sauce = require('../models/sauce');
 const fs = require("fs");
 
 exports.createSauce = (req, res, next) => {
@@ -6,11 +6,15 @@ exports.createSauce = (req, res, next) => {
   delete sauceObject._id;
   const sauce = new Sauce({
     ...sauceObject,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    usersLiked: [],
+    usersDisliked: [],
+    likes: 0,
+    dislikes: 0,
   });
-  Sauce.save()
+  sauce.save()
     .then(() => res.status(201).json({ message: 'Sauce enregistré !'}))
-    .catch(error => res.status(400).json({ error }));
+    //.catch(error => res.status(400).json({ error }));
 };
 
 exports.getOneSauce = (req, res, next) => {
@@ -53,7 +57,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-exports.getAllStuff = (req, res, next) => {
+exports.getAllSauce = (req, res, next) => {
   Sauce.find().then(
     (sauces) => {
       res.status(200).json(sauces);
