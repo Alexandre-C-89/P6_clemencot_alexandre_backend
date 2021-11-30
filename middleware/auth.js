@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const MaskData = require("./maskdata");
+const MaskData = require("maskdata");
 
 module.exports = (req, res, next) => {
   try {
@@ -19,10 +19,10 @@ module.exports = (req, res, next) => {
 };
 
 const maskPasswordOptions = {
-  maskWidth: "X",
-  maxMaskedCharacters: 20, // To limit the output String length to 20.
-  unmaskedStartCharacters: 4,
-  unmaskedEndCharacters: 9
+maskWidth: "X",
+maxMaskedCharacters: 20, // To limit the output String length to 20.
+unmaskedStartCharacters: 4,
+unmaskedEndCharacters: 9
 };
 
 const password = "TEST:U2VjcmV0S2V5MQ==:CLIENT-A";
@@ -30,6 +30,3 @@ const password = "TEST:U2VjcmV0S2V5MQ==:CLIENT-A";
 const maskedPassword = MaskData.maskPassword(password, maskPasswordOptions); //Output: TESTXXXXXXXXXXX:CLIENT-A
 
 maskPasswordOptions.unmaskedStartCharacters = 0;
-
-maskedPassword = MaskData.maskPassword(password, maskPasswordOptions);
-// output: XXXXXXXXXXXXXXXXXX:CLIENT-A
