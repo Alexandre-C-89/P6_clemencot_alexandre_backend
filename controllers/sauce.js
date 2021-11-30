@@ -21,7 +21,7 @@ exports.likeSauce = (req, res, next) => {
   const userId = req.body.userId;
   const like = req.body.like;
   const sauceId = req.params.id;
-  Sauce.findOne({ _id: sauceId })
+  Sauce.findOne({ _id: sauceId }) 
       .then(sauce => {
           // nouvelles valeurs à modifier
           const newValues = {
