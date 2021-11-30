@@ -13,8 +13,10 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "maskdata": "^1.1.6",
     "mongoose": "^6.0.4",
     "mongoose-unique-validator": "^2.0.3",
-    "multer": "^1.4.3"
+    "multer": "^1.4.3",
+    "vt-password-picker": "^1.1.8"
   }
 }
