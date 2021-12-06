@@ -1,14 +1,25 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const MaskData = require("maskdata");
+const MaskData = require("maskdata");
+
+
+// Je masque l'email pour éviter les intrusions 
+const maskEmailOptions = { 
+maskWidth: "X",
+unmaskedStartCharacters: 4, // à partir du 4ème charactère je masque l'email
+unmaskedEndCharacters: 9 // je masque jusqu'au 9ème charactère 
+};
+
+const maskedEmail = MaskData.maskEmail(req.body.email, maskEmailOptions); 
+// Output: TESTXXXXXXXXXXX:CLIENT-A
 
 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      const user = new User({
-        email: req.body.email,
+  .then(hash => {
+    const user = new User({
+        email: maskedEmail,
         password: hash
       });
       user.save()
@@ -19,7 +30,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  User.findOne({ email: maskedEmail })
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -42,16 +53,3 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
-
-// const maskPasswordOptions = {
-// maskWidth: "X",
-// maxMaskedCharacters: 20, // To limit the output String length to 20.
-// unmaskedStartCharacters: 4,
-// unmaskedEndCharacters: 9
-// };
-
-// const password = "TEST:U2VjcmV0S2V5MQ==:CLIENT-A";
-
-// const maskedPassword = MaskData.maskPassword(password, maskPasswordOptions); //Output: TESTXXXXXXXXXXX:CLIENT-A
-
-// maskPasswordOptions.unmaskedStartCharacters = 0;
