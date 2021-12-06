@@ -11,11 +11,10 @@ unmaskedStartCharacters: 4, // à partir du 4ème charactère je masque l'email
 unmaskedEndCharacters: 9 // je masque jusqu'au 9ème charactère 
 };
 
-const maskedEmail = MaskData.maskEmail(req.body.email, maskEmailOptions); 
-// Output: TESTXXXXXXXXXXX:CLIENT-A
-
 
 exports.signup = (req, res, next) => {
+  const maskedEmail = MaskData.maskEmail(req.body.email, maskEmailOptions); 
+  // Output: TESTXXXXXXXXXXX:CLIENT-A
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
     const user = new User({
