@@ -12,6 +12,7 @@ unmaskedEndCharacters: 9 // je masque jusqu'au 9ème charactère
 };
 
 
+
 exports.signup = (req, res, next) => {
   const maskedEmail = MaskData.maskEmail(req.body.email, maskEmailOptions); 
   // Output: TESTXXXXXXXXXXX:CLIENT-A
@@ -29,6 +30,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+  const maskedEmail = MaskData.maskEmail2(req.body.email, maskEmail2Options); 
   User.findOne({ email: maskedEmail })
     .then(user => {
       if (!user) {
