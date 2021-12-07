@@ -5,7 +5,7 @@ const MaskData = require("maskdata");
 
 
 // Je masque l'email pour éviter les intrusions 
-const maskEmailOptions = { 
+const maskEmail2Options = { 
 maskWidth: "X",
 unmaskedStartCharacters: 4, // à partir du 4ème charactère je masque l'email
 unmaskedEndCharacters: 9 // je masque jusqu'au 9ème charactère 
@@ -14,7 +14,7 @@ unmaskedEndCharacters: 9 // je masque jusqu'au 9ème charactère
 
 
 exports.signup = (req, res, next) => {
-  const maskedEmail = MaskData.maskEmail(req.body.email, maskEmailOptions); 
+  const maskedEmail = MaskData.maskEmail2(req.body.email, maskEmail2Options); 
   // Output: TESTXXXXXXXXXXX:CLIENT-A
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
@@ -30,8 +30,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  const maskedEmail = MaskData.maskEmail2(req.body.email, maskEmail2Options); 
-  User.findOne({ email: maskedEmail })
+  User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
