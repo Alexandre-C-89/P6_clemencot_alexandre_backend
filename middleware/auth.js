@@ -19,9 +19,3 @@ module.exports = (req, res, next) => {
     });
   }
 };
-
-// validateToken(token => {
-//   if(token: req.headers.token ) {
-
-//   }
-// });
