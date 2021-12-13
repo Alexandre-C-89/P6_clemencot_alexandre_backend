@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 const path = require("path");
 const dotEnv = require("dotenv");
 const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
 
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require('./routes/user');
+const { log } = require('console');
 
 mongoose.connect('mongodb+srv://Alex:A+b+c+m2018@clusterp6.gtd99.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -34,6 +36,8 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/", limiter);
+app.use(helmet());
+app.use(express.json());
 
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
