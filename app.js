@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require("path");
-const dotEnv = require("dotenv");
+require('dotenv').config();
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 
@@ -10,7 +10,7 @@ const sauceRoutes = require("./routes/sauce");
 const userRoutes = require('./routes/user');
 const { log } = require('console');
 
-mongoose.connect('mongodb+srv://Alex:A+b+c+m2018@clusterp6.gtd99.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://' + process.env.SECRET_BDD,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -20,7 +20,7 @@ const app = express();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 50 // limit each IP to 50 requests per windowMs
+  max: 5 // limit each IP to 50 requests per windowMs
 });
 
 
@@ -40,6 +40,6 @@ app.use(helmet());
 app.use(express.json());
 
 app.use('/api/sauces', sauceRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', limiter, userRoutes);
 
 module.exports = app;
