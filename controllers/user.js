@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const MaskData = require("maskdata");
 const passwordValidator = require("password-validator");
 const emailValidator = require("email-validator");
-const RateLimit = require("express-rate-limit");
 require('dotenv').config("expres");
 
 // Je masque l'email pour éviter les intrusions 
