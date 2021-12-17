@@ -20,7 +20,7 @@ const app = express();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10 // limit each IP to 5 requests per windowMs
+  max: 50 // limit each IP to 5 requests per windowMs
 });
 
 
@@ -31,15 +31,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use("/api/", limiter);
+// app.use("/api/", limiter);
 app.use(helmet());
 app.use(express.json());
 
 app.use('/api/sauces', sauceRoutes);
-app.use('/api/auth', limiter, userRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;

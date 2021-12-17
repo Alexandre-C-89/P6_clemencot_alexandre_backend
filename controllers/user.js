@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const MaskData = require("maskdata");
 const passwordValidator = require("password-validator");
 const emailValidator = require("email-validator");
-require('dotenv').config("expres");
+require('dotenv').config();
 
 // Je masque l'email pour éviter les intrusions 
 const maskEmail2Options = {
@@ -33,6 +33,7 @@ exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
     console.log(req.body.email);
+    console.log(process.env.SECRET_HASH_EMAIL_KEY);
     bcrypt.hash(req.body.email, process.env.SECRET_HASH_EMAIL_KEY)
       .then(hashEmail => {
         console.log(hashEmail);
@@ -53,7 +54,7 @@ exports.login = (req, res, next) => {
   // console.log(req.body.email);
   bcrypt.hash(req.body.email, process.env.SECRET_HASH_EMAIL_KEY)
     .then(hashEmail => {
-      // console.log(hashEmail);
+      console.log(hashEmail);
       User.findOne({ hashEmail })
         .then(user => {
           if (!user) {
