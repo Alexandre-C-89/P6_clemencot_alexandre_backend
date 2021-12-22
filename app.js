@@ -8,7 +8,6 @@ const helmet = require("helmet");
 
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require('./routes/user');
-const { log } = require('console');
 
 mongoose.connect('mongodb+srv://' + process.env.SECRET_BDD,
   { useNewUrlParser: true,

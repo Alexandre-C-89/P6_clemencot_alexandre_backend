@@ -33,10 +33,28 @@ exports.likeSauce = (req, res, next) => {
           // Différents cas:
           switch (like) {
               case 1:  // CAS: sauce liked
-                  newValues.usersLiked.push(userId);
+                  // newValues.usersLiked.push(userId);
+                  if (newValues.usersLiked.includes(userId)) {
+                    // si on annule le like
+                    const index = newValues.usersLiked.indexOf(userId);
+                    newValues.usersLiked.splice(index, 1);
+                } else {
+                    // si on annule le dislike
+                    const index = newValues.usersDisliked.indexOf(userId);
+                    newValues.usersDisliked.splice(index, 1);
+                }
                   break;
               case -1:  // CAS: sauce disliked
-                  newValues.usersDisliked.push(userId);
+                  // newValues.usersDisliked.push(userId);
+                  if (newValues.usersDisliked.includes(userId)) {
+                    // si on annule le like
+                    const index = newValues.usersDisliked.indexOf(userId);
+                    newValues.usersDisliked.splice(index, 1);
+                } else {
+                    // si on annule le dislike
+                    const index = newValues.usersLiked.indexOf(userId);
+                    newValues.usersLiked.splice(index, 1);
+                }
                   break;
               case 0:  // CAS: Annulation du like/dislike
                   if (newValues.usersLiked.includes(userId)) {
