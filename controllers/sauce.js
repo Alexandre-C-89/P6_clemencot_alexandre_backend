@@ -47,7 +47,7 @@ exports.likeSauce = (req, res, next) => {
           break;
         case -1: // CAS: sauce disliked
           if (newValues.usersDisliked.includes(userId)) {
-            // si on annule le like
+            // si on annule le dislike
             const index = newValues.usersDisliked.indexOf(userId);
             newValues.usersDisliked.splice(index, 1);
           } else {
@@ -61,7 +61,7 @@ exports.likeSauce = (req, res, next) => {
             newValues.usersLiked.splice(index, 1);
           }
           if (newValues.usersDisliked.includes(userId)) {
-            // si on annule le like
+            // si on annule le dislike
             const index = newValues.usersDisliked.indexOf(userId);
             newValues.usersDisliked.splice(index, 1);
           }
