@@ -9,7 +9,7 @@ const helmet = require("helmet");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://' + process.env.SECRET_BDD,
+mongoose.connect('mongodb+srv://Alex:A+b+c+m2018@clusterp6.gtd99.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
